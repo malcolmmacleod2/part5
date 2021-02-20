@@ -6,7 +6,7 @@ import loginService from "./services/login";
 
 import Notification from "./components/Notification";
 import Error from "./components/Error";
-import LoginForm from "./components/Login";
+import LoginForm from "./components/LoginForm";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
