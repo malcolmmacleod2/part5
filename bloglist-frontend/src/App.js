@@ -4,6 +4,9 @@ import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
+import Notification from "./components/Notification";
+import Error from "./components/Error";
+
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
@@ -11,7 +14,8 @@ const App = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [notification, setNotification] = useState("");
+  const [error, setError] = useState("");
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -43,9 +47,9 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (exception) {
-      setErrorMessage("Wrong credentials");
+      setError("Wrong credentials");
       setTimeout(() => {
-        setErrorMessage(null);
+        setError(null);
       }, 5000);
     }
   };
@@ -66,6 +70,13 @@ const App = () => {
     try {
       const response = await blogService.create(newBlog);
       console.log(response);
+
+      setNotification(
+        `A new blog '${response.title}' by ${response.author} has been added`
+      );
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
 
       const blogs = await blogService.getAll();
       setBlogs(blogs);
@@ -145,6 +156,8 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={notification} />
+      <Error message={error} />
       <h2>blogs</h2>
 
       {user === null && loginForm()}
