@@ -8,6 +8,9 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [url, setUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [user, setUser] = useState(null);
 
@@ -51,7 +54,25 @@ const App = () => {
     window.localStorage.removeItem("loggedInBlogsAppUser");
   };
 
-  if (user === null) {
+  const handleCreate = async (event) => {
+    event.preventDefault();
+
+    const newBlog = {
+      title: title,
+      author: author,
+      url: url,
+    };
+
+    try {
+      const response = await blogService.create(newBlog);
+      console.log(response);
+
+      const blogs = await blogService.getAll();
+      setBlogs(blogs);
+    } catch (exception) {}
+  };
+
+  const loginForm = () => {
     return (
       <div>
         <h2>Log in to application</h2>
@@ -78,20 +99,62 @@ const App = () => {
         </form>
       </div>
     );
-  } else {
+  };
+
+  const blogForm = () => {
     return (
       <div>
         <p>{user.name} is logged in</p>
         <button type="button" onClick={handleLogout}>
           Logout
         </button>
-        <h2>blogs</h2>
-        {blogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
+        <h3>Create New</h3>
+        <form onSubmit={handleCreate}>
+          <div>
+            title
+            <input
+              type="text"
+              value={title}
+              name="Title"
+              onChange={({ target }) => setTitle(target.value)}
+            />
+          </div>
+          <div>
+            author
+            <input
+              type="text"
+              value={author}
+              name="Author"
+              onChange={({ target }) => setAuthor(target.value)}
+            />
+          </div>
+          <div>
+            URL
+            <input
+              type="text"
+              value={url}
+              name="Url"
+              onChange={({ target }) => setUrl(target.value)}
+            />
+          </div>
+          <button type="submit">create</button>
+        </form>
       </div>
     );
-  }
+  };
+
+  return (
+    <div>
+      <h2>blogs</h2>
+
+      {user === null && loginForm()}
+      {user !== null && blogForm()}
+
+      {blogs.map((blog) => (
+        <Blog key={blog.id} blog={blog} />
+      ))}
+    </div>
+  );
 };
 
 export default App;
