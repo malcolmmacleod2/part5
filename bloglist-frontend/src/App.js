@@ -6,6 +6,7 @@ import loginService from "./services/login";
 
 import Notification from "./components/Notification";
 import Error from "./components/Error";
+import LoginForm from "./components/Login";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -17,6 +18,7 @@ const App = () => {
   const [notification, setNotification] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
+  const [loginVisible, setLoginVisible] = useState(false);
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -84,30 +86,24 @@ const App = () => {
   };
 
   const loginForm = () => {
+    const hideWhenVisible = { display: loginVisible ? "none" : "" };
+    const showWhenVisible = { display: loginVisible ? "" : "none" };
+
     return (
       <div>
-        <h2>Log in to application</h2>
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit">login</button>
-        </form>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>Log In</button>
+        </div>
+        <div style={showWhenVisible}>
+          <LoginForm
+            username={username}
+            password={password}
+            setUsername={({ target }) => setUsername(target.value)}
+            setPassword={({ target }) => setPassword(target.value)}
+            handleLogin={handleLogin}
+          />
+          <button onClick={() => setLoginVisible(false)}>Cancel </button>
+        </div>
       </div>
     );
   };
