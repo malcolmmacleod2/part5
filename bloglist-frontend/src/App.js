@@ -74,6 +74,8 @@ const App = () => {
         setNotification(null);
       }, 5000);
 
+      blogFormRef.current.toggleVisibility();
+
       const blogs = await blogService.getAll();
       setBlogs(blogs);
     } catch (exception) {}
