@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Blog from "./components/Blog";
 
 import blogService from "./services/blogs";
@@ -8,6 +8,7 @@ import Notification from "./components/Notification";
 import Error from "./components/Error";
 import LoginForm from "./components/LoginForm";
 import BlogForm from "./components/BlogForm";
+import Togglable from "./components/Toggleable";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -17,8 +18,9 @@ const App = () => {
   const [notification, setNotification] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
-  const [loginVisible, setLoginVisible] = useState(false);
-  const [blogVisible, setBlogVisible] = useState(false);
+
+  const blogFormRef = useRef();
+  const loginFormRef = useRef();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -78,16 +80,9 @@ const App = () => {
   };
 
   const loginForm = () => {
-    const hideWhenVisible = { display: loginVisible ? "none" : "" };
-    const showWhenVisible = { display: loginVisible ? "" : "none" };
-
     return (
       <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setLoginVisible(true)}>Log In</button>
-        </div>
-
-        <div style={showWhenVisible}>
+        <Togglable buttonLabel="Log In" ref={loginFormRef}>
           <LoginForm
             username={username}
             password={password}
@@ -95,30 +90,22 @@ const App = () => {
             setPassword={({ target }) => setPassword(target.value)}
             handleLogin={handleLogin}
           />
-          <button onClick={() => setLoginVisible(false)}>Cancel </button>
-        </div>
+        </Togglable>
       </div>
     );
   };
 
   const blogForm = () => {
-    const hideWhenVisible = { display: blogVisible ? "none" : "" };
-    const showWhenVisible = { display: blogVisible ? "" : "none" };
-
     return (
       <div>
         <p>{user.name} is logged in</p>
         <button type="button" onClick={handleLogout}>
           Logout
         </button>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setBlogVisible(true)}>Create blog</button>
-        </div>
 
-        <div style={showWhenVisible}>
+        <Togglable buttonLabel="Create blog" ref={blogFormRef}>
           <BlogForm createBlog={addBlog} />
-          <button onClick={() => setBlogVisible(false)}>Cancel </button>
-        </div>
+        </Togglable>
       </div>
     );
   };
