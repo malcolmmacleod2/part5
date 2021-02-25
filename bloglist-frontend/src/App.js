@@ -13,9 +13,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
+
   const [notification, setNotification] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
@@ -62,15 +60,7 @@ const App = () => {
     window.localStorage.removeItem("loggedInBlogsAppUser");
   };
 
-  const handleCreate = async (event) => {
-    event.preventDefault();
-
-    const newBlog = {
-      title: title,
-      author: author,
-      url: url,
-    };
-
+  const addBlog = async (newBlog) => {
     try {
       const response = await blogService.create(newBlog);
       console.log(response);
@@ -126,15 +116,7 @@ const App = () => {
         </div>
 
         <div style={showWhenVisible}>
-          <BlogForm
-            title={title}
-            author={author}
-            url={url}
-            handleTitleChange={({ target }) => setTitle(target.value)}
-            handleAuthorChange={({ target }) => setAuthor(target.value)}
-            handleUrlChange={({ target }) => setUrl(target.value)}
-            handleCreate={handleCreate}
-          />
+          <BlogForm createBlog={addBlog} />
           <button onClick={() => setBlogVisible(false)}>Cancel </button>
         </div>
       </div>
