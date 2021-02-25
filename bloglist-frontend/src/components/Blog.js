@@ -1,8 +1,44 @@
-import React from 'react'
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>
-)
+import React, { useState } from "react";
 
-export default Blog
+const Blog = ({ blog }) => {
+  const [showDetails, setShowDetails] = useState(false);
+
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: "solid",
+    borderWidth: 1,
+    marginBottom: 5,
+  };
+
+  const hideBlogDetails = { display: showDetails ? "none" : "" };
+  const showBlogDetails = { display: showDetails ? "" : "none" };
+
+  const toggleShowDetails = () => {
+    setShowDetails(!showDetails);
+  };
+
+  return (
+    <div style={blogStyle}>
+      <div style={hideBlogDetails}>
+        <div>
+          {blog.title} {blog.author}
+          <button onClick={toggleShowDetails}>show</button>
+        </div>
+      </div>
+      <div style={showBlogDetails}>
+        <div>
+          {blog.title} {blog.author}
+          <button onClick={toggleShowDetails}>hide</button>
+        </div>
+        <div>{blog.url}</div>
+        <div>
+          likes 0<button>like</button>
+        </div>
+        <div>{blog.user.name}</div>
+      </div>
+    </div>
+  );
+};
+
+export default Blog;
