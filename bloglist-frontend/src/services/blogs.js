@@ -45,4 +45,16 @@ const put = async (blog) => {
   }
 };
 
-export default { getAll, create, put, setToken };
+const remove = async (blog) => {
+  try {
+    const config = {
+      headers: { Authorization: token },
+    };
+
+    await axios.delete(`${baseUrl}/${blog.id}`, config);
+  } catch (exception) {
+    console.error(exception);
+  }
+};
+
+export default { getAll, create, put, remove, setToken };

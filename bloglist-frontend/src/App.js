@@ -91,6 +91,15 @@ const App = () => {
     } catch (exception) {}
   };
 
+  const removeBlog = async (blog) => {
+    try {
+      await blogService.remove(blog);
+
+      const blogs = await blogService.getAll();
+      setBlogs(blogs);
+    } catch (exception) {}
+  };
+
   const loginForm = () => {
     return (
       <div>
@@ -116,7 +125,7 @@ const App = () => {
         </button>
 
         <Togglable buttonLabel="Create blog" ref={blogFormRef}>
-          <BlogForm createBlog={addBlog} updateBlog={updateBlog} />
+          <BlogForm createBlog={addBlog} />
         </Togglable>
       </div>
     );
@@ -132,7 +141,13 @@ const App = () => {
       {user !== null && blogForm()}
 
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
+        <Blog
+          key={blog.id}
+          blog={blog}
+          updateBlog={updateBlog}
+          deleteBlog={removeBlog}
+          loggedInUser={user}
+        />
       ))}
     </div>
   );
