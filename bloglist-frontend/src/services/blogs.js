@@ -13,7 +13,10 @@ const getAll = async () => {
   };
 
   const response = await axios.get(baseUrl, config);
-  return response.data;
+
+  const blogs = response.data;
+  const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
+  return sortedBlogs;
 };
 
 const create = async (blog) => {
