@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, updateBlog, deleteBlog, loggedInUser }) => {
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState(false)
 
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: "solid",
+    border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
-  };
+  }
 
-  const hideBlogDetails = { display: showDetails ? "none" : "" };
-  const showBlogDetails = { display: showDetails ? "" : "none" };
+  const hideBlogDetails = { display: showDetails ? 'none' : '' }
+  const showBlogDetails = { display: showDetails ? '' : 'none' }
 
   const toggleShowDetails = () => {
-    setShowDetails(!showDetails);
-  };
+    setShowDetails(!showDetails)
+  }
 
   const updateLikes = async () => {
     const updatedBlog = {
@@ -27,16 +27,16 @@ const Blog = ({ blog, updateBlog, deleteBlog, loggedInUser }) => {
       url: blog.url,
       user: blog.user,
       likes: blog.likes + 1,
-    };
+    }
 
-    await updateBlog(updatedBlog);
-  };
+    await updateBlog(updatedBlog)
+  }
 
   const removeBlog = async () => {
     if (window.confirm(`Remove blog ${blog.name} by ${blog.author}?`)) {
-      await deleteBlog(blog);
+      await deleteBlog(blog)
     }
-  };
+  }
 
   return (
     <div style={blogStyle}>
@@ -62,14 +62,14 @@ const Blog = ({ blog, updateBlog, deleteBlog, loggedInUser }) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   updateBlog: PropTypes.func.isRequired,
   deleteBlog: PropTypes.func.isRequired,
   loggedInUser: PropTypes.object.isRequired,
-};
+}
 
-export default Blog;
+export default Blog
