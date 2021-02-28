@@ -1,6 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import Blog from './Blog'
 
 describe('<Blog />', () => {
@@ -47,5 +47,13 @@ describe('<Blog />', () => {
   test('at start details is not displayed', () => {
     const div = component.container.querySelector('.BlogDetails')
     expect(div).toHaveStyle('display: none')
+  })
+
+  test('Show button is clicked the  details are displayed', () => {
+    const showButton = component.getByText('show')
+    fireEvent.click(showButton)
+
+    const div = component.container.querySelector('.BlogDetails')
+    expect(div).not.toHaveStyle('display: none')
   })
 })
