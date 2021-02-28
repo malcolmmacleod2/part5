@@ -39,14 +39,14 @@ const Blog = ({ blog, updateBlog, deleteBlog, loggedInUser }) => {
   }
 
   return (
-    <div style={blogStyle}>
-      <div style={hideBlogDetails}>
+    <div className="Blog" style={blogStyle}>
+      <div className="BlogSummary" style={hideBlogDetails}>
         <div>
           {blog.title} {blog.author}
           <button onClick={toggleShowDetails}>show</button>
         </div>
       </div>
-      <div style={showBlogDetails}>
+      <div className="BlogDetails" style={showBlogDetails}>
         <div>
           {blog.title} {blog.author}
           <button onClick={toggleShowDetails}>hide</button>
