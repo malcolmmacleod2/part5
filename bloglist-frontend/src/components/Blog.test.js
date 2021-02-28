@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react'
 import Blog from './Blog'
 
 describe('<Blog />', () => {
-  let component
+  let component, mockUpdate
 
   beforeEach(() => {
     const user = {
@@ -20,7 +20,7 @@ describe('<Blog />', () => {
       user: user,
     }
 
-    const mockUpdate = jest.fn()
+    mockUpdate = jest.fn()
     const mockDelete = jest.fn()
 
     component = render(
@@ -55,5 +55,16 @@ describe('<Blog />', () => {
 
     const div = component.container.querySelector('.BlogDetails')
     expect(div).not.toHaveStyle('display: none')
+  })
+
+  test('Like button fires event twice', () => {
+    const showButton = component.getByText('show')
+    fireEvent.click(showButton)
+
+    const likeButton = component.getByText('like')
+    fireEvent.click(likeButton)
+    fireEvent.click(likeButton)
+
+    expect(mockUpdate.mock.calls).toHaveLength(2)
   })
 })
