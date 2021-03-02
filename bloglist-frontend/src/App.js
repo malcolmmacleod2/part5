@@ -20,7 +20,6 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   const blogFormRef = useRef()
-  const loginFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
@@ -109,15 +108,13 @@ const App = () => {
   const loginForm = () => {
     return (
       <div>
-        <Togglable buttonLabel="Log In" ref={loginFormRef}>
-          <LoginForm
-            username={username}
-            password={password}
-            setUsername={({ target }) => setUsername(target.value)}
-            setPassword={({ target }) => setPassword(target.value)}
-            handleLogin={handleLogin}
-          />
-        </Togglable>
+        <LoginForm
+          username={username}
+          password={password}
+          setUsername={({ target }) => setUsername(target.value)}
+          setPassword={({ target }) => setPassword(target.value)}
+          handleLogin={handleLogin}
+        />
       </div>
     )
   }
