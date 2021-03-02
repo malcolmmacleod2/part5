@@ -50,7 +50,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setError('Wrong credentials')
+      setError('wrong credentials')
       setTimeout(() => {
         setError(null)
       }, 5000)
@@ -90,7 +90,7 @@ const App = () => {
       const blogs = await blogService.getAll()
       setBlogs(blogs)
     } catch (exception) {
-      console.elog(exception)
+      console.log(exception)
     }
   }
 
@@ -122,7 +122,7 @@ const App = () => {
   const blogForm = () => {
     return (
       <div>
-        <p>{user.name} is logged in</p>
+        <p>{user.name} logged in</p>
         <button type="button" onClick={handleLogout}>
           Logout
         </button>
