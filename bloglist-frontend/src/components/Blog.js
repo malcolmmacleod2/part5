@@ -52,7 +52,7 @@ const Blog = ({ blog, updateBlog, deleteBlog, loggedInUser }) => {
           <button onClick={toggleShowDetails}>hide</button>
         </div>
         <div>{blog.url}</div>
-        <div>
+        <div className="BlogLikes">
           likes {blog.likes}
           <button onClick={updateLikes}>like</button>
         </div>
