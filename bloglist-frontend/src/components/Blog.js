@@ -58,7 +58,7 @@ const Blog = ({ blog, updateBlog, deleteBlog, loggedInUser }) => {
         </div>
         <div>{blog?.user?.name}</div>
         {loggedInUser?.username === blog?.user?.username && (
-          <button onClick={removeBlog}>Remove</button>
+          <button className='Remove' onClick={removeBlog}>Remove</button>
         )}
       </div>
     </div>
