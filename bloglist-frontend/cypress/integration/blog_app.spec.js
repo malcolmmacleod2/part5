@@ -94,7 +94,20 @@ describe('Blog app', function() {
       cy.contains('show').click()
       cy.get('.Remove').should('not.exist')
     })
-  })
 
-  
+    it('Blogs are ordered by likes', function() {
+      cy.createBlog({ title: 'A test blog', author: 'test user', url: 'http://test1.com', likes: 3 })
+      cy.createBlog({ title: 'Another test blog', author: 'test user2', url: 'http://test2.com', likes: 13 })
+      cy.createBlog({ title: 'Third test blog', author: 'test user3', url: 'http://test3.com', likes: 1 })
+
+      cy.get('.BlogSummary')
+      cy.get('.showDetails').click({multiple: true})
+
+      cy.get('.BlogLikes').then(blogLikes => {
+        expect(blogLikes[0]).to.contain(13)
+        expect(blogLikes[1]).to.contain(3)
+        expect(blogLikes[2]).to.contain(1)
+      })
+    })
+  })
 })

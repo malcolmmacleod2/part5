@@ -43,13 +43,13 @@ const Blog = ({ blog, updateBlog, deleteBlog, loggedInUser }) => {
       <div className="BlogSummary" style={hideBlogDetails}>
         <div>
           {blog.title} {blog.author}
-          <button onClick={toggleShowDetails}>show</button>
+          <button className="showDetails" onClick={toggleShowDetails}>show</button>
         </div>
       </div>
       <div className="BlogDetails" style={showBlogDetails}>
         <div>
           {blog.title} {blog.author}
-          <button onClick={toggleShowDetails}>hide</button>
+          <button className="hideDetails" onClick={toggleShowDetails}>hide</button>
         </div>
         <div>{blog.url}</div>
         <div className="BlogLikes">
